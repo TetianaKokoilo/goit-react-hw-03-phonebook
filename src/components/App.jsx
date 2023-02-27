@@ -44,7 +44,7 @@ export class App extends Component {
   };
 
   changeFilter = e => {
-    this.setState({ filter: e.target.value });
+    this.setState({ filter: e.target.value.trim() });
   };
 
   getFilterName = () => {
