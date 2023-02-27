@@ -4,7 +4,11 @@ import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
 import { nanoid } from 'nanoid';
 
-import { StyledTitle, StyledContainer, StyledContactsTitle } from './App.styled';
+import {
+  StyledTitle,
+  StyledContainer,
+  StyledContactsTitle,
+} from './App.styled';
 
 export class App extends Component {
   state = {
@@ -18,22 +22,20 @@ export class App extends Component {
   };
 
   addContactformSubmit = ({ name, number }) => {
-    
     const contact = {
       id: nanoid(),
       name,
       number,
     };
 
-    let prevCont = this.state.contacts.map(({ name }) =>
-      name.toLowerCase())
+    let prevCont = this.state.contacts.map(({ name }) => name.toLowerCase());
     if (prevCont.includes(name.toLowerCase())) {
       alert(`${name} is already in contacts`);
-      return
+      return;
     } else {
-        this.setState(({ contacts }) => ({
-      contacts: [contact, ...contacts],
-    }));
+      this.setState(({ contacts }) => ({
+        contacts: [contact, ...contacts],
+      }));
     }
   };
 
@@ -54,11 +56,18 @@ export class App extends Component {
       contact.name.toLowerCase().includes(normalisedFilter)
     );
   };
+  componentDidMount() {
+    const infoContacts = localStorage.getItem('contacts');
+    const parsedInfoContacts = JSON.parse(infoContacts);
+    if (parsedInfoContacts) {
+      this.setState({ contacts: parsedInfoContacts });
+    }
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (this.state.contacts !== prevState.contacts) {
-      console.log('Update contacts');
       localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
-    }
+    } 
   }
 
   render() {
