@@ -55,7 +55,6 @@ export class App extends Component {
 
   componentDidMount() {
     const savedContacts = localStorage.getItem('contacts');
-    
     if (savedContacts !== null) {
       const parsedInfoContacts = JSON.parse(savedContacts);
       this.setState({ contacts: parsedInfoContacts });
