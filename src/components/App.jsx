@@ -26,8 +26,8 @@ export class App extends Component {
     };
 
     let prevCont = this.state.contacts.map(({ name }) =>
-      name)
-    if (prevCont.includes(name)) {
+      name.toLowerCase())
+    if (prevCont.includes(name.toLowerCase())) {
       alert(`${name} is already in contacts`);
       return
     } else {
