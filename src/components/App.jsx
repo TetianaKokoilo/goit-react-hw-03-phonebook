@@ -54,6 +54,12 @@ export class App extends Component {
       contact.name.toLowerCase().includes(normalisedFilter)
     );
   };
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.contacts !== prevState.contacts) {
+      console.log('Update contacts');
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
 
   render() {
     const contacts = this.getFilterName();
