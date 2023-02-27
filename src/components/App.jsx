@@ -3,6 +3,7 @@ import { ContactForm } from './ContactForm/ContactForm';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
 import { nanoid } from 'nanoid';
+import dataContacts from '../contactsdata.json';
 
 import {
   StyledTitle,
@@ -51,18 +52,22 @@ export class App extends Component {
       contact.name.toLowerCase().includes(normalisedFilter)
     );
   };
+
   componentDidMount() {
-    const infoContacts = localStorage.getItem('contacts');
-    const parsedInfoContacts = JSON.parse(infoContacts);
-    if (parsedInfoContacts) {
+    const savedContacts = localStorage.getItem('contacts');
+    
+    if (savedContacts !== null) {
+      const parsedInfoContacts = JSON.parse(savedContacts);
       this.setState({ contacts: parsedInfoContacts });
+      return;
     }
+    this.setState({contacts: dataContacts})
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.contacts !== prevState.contacts) {
       localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
-    } 
+    }
   }
 
   render() {
